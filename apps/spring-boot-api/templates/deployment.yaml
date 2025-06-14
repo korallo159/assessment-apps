@@ -60,3 +60,11 @@ spec:
           preStop:
             exec:
               command: ["wget", "http://localhost:8080/service/shutdown"]
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config.json
+          subPath: config.json
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
