@@ -1,6 +1,3 @@
-
-spring-boot-api:
-  replicas: 3
-  host: dev.inpost-assessment-devops.com
-  profile: dev
-  
+replicas: 3
+host: dev.inpost-assessment-devops.com
+profile: dev
