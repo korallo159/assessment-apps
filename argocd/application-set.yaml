@@ -12,6 +12,7 @@ spec:
       - cluster: in-cluster
         url: https://kubernetes.default.svc
         branch: main
+        config: dev
   template:
     metadata:
       name: '{{.cluster}}-spring-boot-api'
@@ -23,8 +24,7 @@ spec:
           path: apps/spring-boot-api
           helm:
             valueFiles:
-            - $values/values/spring-boot-api/values-{{.branch}}.yaml
-
+            - $values/values/spring-boot-api/values-{{.config}}.yaml
         - repoURL: https://github.com/korallo159/assessment-apps.git
           targetRevision: '{{.branch}}'
           ref: values
