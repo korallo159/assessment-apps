@@ -1,0 +1,9 @@
+apiVersion: v2
+name: spring-boot-api
+description: Inpost assessment task app
+
+type: application
+
+version: 1.0.0
+
+appVersion: "1.0.0"
