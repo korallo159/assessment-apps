@@ -22,6 +22,7 @@ spec:
         image: busybox:stable
         args:
         - "--spring.profiles.active={{ .Values.profile}}"
+        command: ["sh", "-c", "while true; do sleep 3600; done"]
         env:
         - name: POD_IP
           valueFrom:
