@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: spring-boot-api
 spec:
-  replicas: {{ .Values.spring-boot-api.replicas}}
+  replicas: {{ .Values.replicas}}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -21,7 +21,7 @@ spec:
       - name: spring-boot-api
         image: busybox:stable
         args:
-        - "--spring.profiles.active={{ .Values.spring-boot-api.profile}}"
+        - "--spring.profiles.active={{ .Values.profile}}"
         env:
         - name: POD_IP
           valueFrom:
