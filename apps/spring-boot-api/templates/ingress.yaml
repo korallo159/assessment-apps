@@ -3,12 +3,9 @@ kind: Ingress
 metadata:
   name: spring-boot-api
 spec:
-  tls:
-  - hosts:
-    - {{ .Values.spring-boot-api.host }}
-    secretName: example-tls-secret
+  ingressClassName: nginx
   rules:
-  - host: dev.example.com
+  - host: {{ .Values.spring-boot-api.host }}
     http:
       paths:
       - path: /api
