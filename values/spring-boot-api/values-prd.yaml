@@ -1,0 +1,3 @@
+replicas: 5
+host: prd.inpost-assessment-devops.com
+profile: prd

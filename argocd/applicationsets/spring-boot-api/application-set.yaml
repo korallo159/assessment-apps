@@ -19,13 +19,13 @@ spec:
     spec:
       project: default
       sources:
-        - repoURL: https://github.com/korallo159/assessment-apps.git
+        - repoURL: https://github.com/korallo159/inpost-assessment-argocd.git
           targetRevision: '{{.branch}}'
           path: apps/spring-boot-api
           helm:
             valueFiles:
             - $values/values/spring-boot-api/values-{{.config}}.yaml
-        - repoURL: https://github.com/korallo159/assessment-apps.git
+        - repoURL: https://github.com/korallo159/inpost-assessment-argocd.git
           targetRevision: '{{.branch}}'
           ref: values
       destination:
