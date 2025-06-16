@@ -1,0 +1,7 @@
+replicaCount: 3
+
+ingress:
+  host: dev.inpost-assessment-devops.com
+
+app:
+  profile: dev

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-api
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/configs/app.yaml") . | sha256sum }}
+spec:
+  replicas: {{ .Values.replicaCount}}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "100%"
+      maxUnavailable: "0%"
+  selector:
+    matchLabels:
+      app: spring-boot-api
+  template:
+    metadata:
+      labels:
+        app: spring-boot-api
+    spec:
+      containers:
+      - name: spring-boot-api
+        image: busybox:stable
+        args:
+        - "--spring.profiles.active={{ .Values.app.profile}}"
+        command: ["sh", "-c", "while true; do sleep 3600; done"]
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: apiKey
+        ports:
+        - name: api
+          containerPort: 8080
+        - name: logs
+          containerPort: 8081
+        - name: soap
+          containerPort: 8082
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "128Mi"
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        lifecycle:
+          preStop:
+            exec:
+              command: ["wget", "http://localhost:8080/service/shutdown"]
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config.json
+          subPath: config.json
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
